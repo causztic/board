@@ -21,7 +21,8 @@ defmodule BoardWeb.UserSocket do
   def connect(%{"token" => token}, socket) do
     case Guardian.Phoenix.Socket.authenticate(socket, Board.UserManager.Guardian, token) do
       {:ok, socket} ->
-        {:ok, socket}
+        user = Guardian.Phoenix.Socket.current_resource(socket).id
+        {:ok, assign(socket, :user_id, user)}
       {:error, _} -> :error
     end
   end
@@ -40,9 +41,5 @@ defmodule BoardWeb.UserSocket do
   #     BoardWeb.Endpoint.broadcast("user_socket:#{user.id}", "disconnect", %{})
   #
   # Returning `nil` makes this socket anonymous.
-  def id(_socket), do: nil
-  # def id(socket) do
-  #   user_id = Guardian.Phoenix.Socket.current_resource(socket).id
-  #   "user_socket:#{user_id}"
-  # end
+  def id(socket), do: "user_socket:#{socket.assigns.user_id}"
 end
