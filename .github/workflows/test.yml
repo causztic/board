@@ -3,7 +3,8 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
-
+    env:
+      MIX_ENV: test
     services:
       db:
         image: postgres:13.3-alpine
