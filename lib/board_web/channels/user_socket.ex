@@ -1,5 +1,6 @@
 defmodule BoardWeb.UserSocket do
   use Phoenix.Socket
+  alias Guardian
 
   ## Channels
   # channel "room:*", BoardWeb.RoomChannel
@@ -16,10 +17,19 @@ defmodule BoardWeb.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  def connect(_params, socket, _connect_info) do
-    {:ok, socket}
+
+  def connect(%{"token" => token}, socket) do
+    case Guardian.Phoenix.Socket.authenticate(socket, Board.UserManager.Guardian, token) do
+      {:ok, socket} ->
+        {:ok, socket}
+      {:error, _} -> :error
+    end
   end
 
+  # This function will be called when there was no authentication information
+  def connect(_params, _socket) do
+    :error
+  end
   # Socket id's are topics that allow you to identify all sockets for a given user:
   #
   #     def id(socket), do: "user_socket:#{socket.assigns.user_id}"
@@ -31,4 +41,8 @@ defmodule BoardWeb.UserSocket do
   #
   # Returning `nil` makes this socket anonymous.
   def id(_socket), do: nil
+  # def id(socket) do
+  #   user_id = Guardian.Phoenix.Socket.current_resource(socket).id
+  #   "user_socket:#{user_id}"
+  # end
 end

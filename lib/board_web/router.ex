@@ -21,6 +21,7 @@ defmodule BoardWeb.Router do
   # We use ensure_auth to fail if there is no one logged in
   pipeline :ensure_auth do
     plug Guardian.Plug.EnsureAuthenticated
+    plug :put_user_token
   end
 
   # Maybe logged in routes
@@ -39,5 +40,10 @@ defmodule BoardWeb.Router do
     pipe_through [:browser, :auth, :ensure_auth]
 
     get "/protected", PageController, :protected
+  end
+
+  defp put_user_token(conn, _) do
+    token = Board.UserManager.Guardian.Plug.current_token(conn)
+    assign(conn, :user_token, token)
   end
 end
