@@ -4,7 +4,7 @@ defmodule Board.Repo.Migrations.CreateUsers do
   def change do
     create table(:users) do
       add :email, :string
-      add :password, :string
+      add :password, :string, redact: true
 
       timestamps()
     end
