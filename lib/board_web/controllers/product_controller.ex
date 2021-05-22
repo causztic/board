@@ -3,13 +3,21 @@ defmodule BoardWeb.ProductController do
 
   alias Board.{Products, Products.Product}
 
+  def index(conn, _params) do
+    products = conn.assigns.current_user
+      |> Products.list_products
+
+    render(conn, "index.html", products: products)
+  end
+
   def new(conn, _params) do
     changeset = Product.changeset(%Product{}, %{})
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"product" => product_params}) do
-    Products.create_product(conn.assigns.current_user, product_params)
+    conn.assigns.current_user
+      |> Products.create_product(product_params)
       |> case do
         {:ok, product} ->
           conn

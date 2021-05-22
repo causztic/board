@@ -3,11 +3,9 @@ import Board.Factories
 defmodule Board.ProductsTest do
   use Board.DataCase
 
-  alias Board.Products
+  alias Board.{Products, Products.Product}
 
   describe "products" do
-    alias Board.Products.Product
-
     @valid_attrs %{title: "some title"}
     @update_attrs %{title: "some updated title"}
     @invalid_attrs %{title: nil}
@@ -15,6 +13,17 @@ defmodule Board.ProductsTest do
     test "list_products/0 returns all products" do
       product = insert!(:product)
       assert Products.list_products() == [product]
+    end
+
+    test "list_products/1 returns products by user" do
+      user = insert!(:user)
+
+      insert!(:product)
+      insert!(:product)
+      {:ok, %Product{} = product} = Products.create_product(user, @valid_attrs)
+
+      assert length(Products.list_products(user)) == 1
+      assert product.title == "some title"
     end
 
     test "get_product!/1 returns the product with given id" do
