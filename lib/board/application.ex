@@ -11,9 +11,10 @@ defmodule Board.Application do
       # Start the Ecto repository
       Board.Repo,
       # Start the endpoint when the application starts
-      BoardWeb.Endpoint
+      BoardWeb.Endpoint,
       # Starts a worker by calling: Board.Worker.start_link(arg)
       # {Board.Worker, arg},
+      {Phoenix.PubSub, [name: Board.PubSub, adapter: Phoenix.PubSub.PG2]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
