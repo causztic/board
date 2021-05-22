@@ -1,5 +1,7 @@
 defmodule Board.Factories do
   alias Board.Repo
+  def build(_any, attributes \\ [])
+
   def build(:user, attributes) do
     attrs = Enum.into(attributes, %{
       email: "hello#{System.unique_integer()}",
