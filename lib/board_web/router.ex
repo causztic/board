@@ -1,5 +1,6 @@
 defmodule BoardWeb.Router do
   use BoardWeb, :router
+  alias Board.Accounts
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -15,13 +16,13 @@ defmodule BoardWeb.Router do
 
   # Our pipeline implements "maybe" authenticated. We'll use the `:ensure_auth` below for when we need to make sure someone is logged in.
   pipeline :auth do
-    plug Board.UserManager.Pipeline
+    plug Board.Accounts.Pipeline
   end
 
   # We use ensure_auth to fail if there is no one logged in
   pipeline :ensure_auth do
     plug Guardian.Plug.EnsureAuthenticated
-    plug :put_user_token
+    plug :set_current_user
   end
 
   # Maybe logged in routes
@@ -42,8 +43,12 @@ defmodule BoardWeb.Router do
     get "/protected", PageController, :protected
   end
 
-  defp put_user_token(conn, _) do
-    token = Board.UserManager.Guardian.Plug.current_token(conn)
-    assign(conn, :user_token, token)
+  defp set_current_user(conn, _) do
+    token = Guardian.Plug.current_token(conn)
+    user = Guardian.Plug.current_resource(conn)
+
+    conn
+    |> assign(:user_token, token)
+    |> assign(:current_user, user)
   end
 end

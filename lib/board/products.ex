@@ -1,12 +1,13 @@
-defmodule Board.ProductManager do
+defmodule Board.Products do
   @moduledoc """
-  The ProductManager context.
+  The Products context.
   """
 
   import Ecto.Query, warn: false
   alias Board.Repo
 
-  alias Board.ProductManager.Product
+  alias Board.Accounts.User
+  alias Board.Products.Product
 
   @doc """
   Returns the list of products.
@@ -52,6 +53,13 @@ defmodule Board.ProductManager do
   def create_product(attrs \\ %{}) do
     %Product{}
     |> Product.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def create_product(%User{} = user, attrs) do
+    %Product{}
+    |> Product.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:users, [user])
     |> Repo.insert()
   end
 

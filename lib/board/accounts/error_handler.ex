@@ -1,4 +1,4 @@
-defmodule Board.UserManager.ErrorHandler do
+defmodule Board.Accounts.ErrorHandler do
   import Plug.Conn
 
   @behaviour Guardian.Plug.ErrorHandler

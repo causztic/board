@@ -19,7 +19,7 @@ defmodule BoardWeb.UserSocket do
   # performing token verification on connect.
 
   def connect(%{"token" => token}, socket) do
-    case Guardian.Phoenix.Socket.authenticate(socket, Board.UserManager.Guardian, token) do
+    case Guardian.Phoenix.Socket.authenticate(socket, Board.Accounts.Guardian, token) do
       {:ok, socket} ->
         user = Guardian.Phoenix.Socket.current_resource(socket).id
         {:ok, assign(socket, :user_id, user)}

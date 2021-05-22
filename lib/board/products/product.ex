@@ -1,10 +1,10 @@
-defmodule Board.ProductManager.Product do
+defmodule Board.Products.Product do
   use Ecto.Schema
   import Ecto.Changeset
 
   schema "products" do
     field :title, :string
-    field :user_id, :string
+    many_to_many :users, Board.Accounts.User, join_through: "users_products"
 
     timestamps()
   end
@@ -12,7 +12,7 @@ defmodule Board.ProductManager.Product do
   @doc false
   def changeset(product, attrs) do
     product
-    |> cast(attrs, [:title, :user_id])
-    |> validate_required([:title, :user_id])
+    |> cast(attrs, [:title])
+    |> validate_required([:title])
   end
 end

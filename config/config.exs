@@ -26,7 +26,7 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :board, Board.UserManager.Guardian,
+config :board, Board.Accounts.Guardian,
   issuer: "board",
   secret_key: ""
 

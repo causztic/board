@@ -1,8 +1,8 @@
-defmodule Board.UserManager.Pipeline do
+defmodule Board.Accounts.Pipeline do
   use Guardian.Plug.Pipeline,
     otp_app: :board,
-    error_handler: Board.UserManager.ErrorHandler,
-    module: Board.UserManager.Guardian
+    error_handler: Board.Accounts.ErrorHandler,
+    module: Board.Accounts.Guardian
 
   # If there is a session token, restrict it to an access token and validate it
   plug Guardian.Plug.VerifySession, claims: %{"typ" => "access"}

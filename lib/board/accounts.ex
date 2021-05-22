@@ -1,12 +1,12 @@
-defmodule Board.UserManager do
+defmodule Board.Accounts do
   @moduledoc """
-  The UserManager context.
+  The Accounts context.
   """
 
   import Ecto.Query, only: [from: 2]
   alias Board.Repo
 
-  alias Board.UserManager.User
+  alias Board.Accounts.User
   alias Argon2
 
   @doc """
