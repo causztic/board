@@ -41,6 +41,7 @@ defmodule BoardWeb.Router do
 
     get "/protected", PageController, :protected
     get "/products/new", ProductController,:new
+    post "/products", ProductController, :create
   end
 
   defp set_current_user(conn, _) do

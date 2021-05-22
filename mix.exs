@@ -42,7 +42,7 @@ defmodule Board.MixProject do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"},
+      {:plug_cowboy, "~> 2.1"},
       {:guardian, "~> 2.0"},
       {:guardian_phoenix, "~> 2.0"},
       {:argon2_elixir, "~> 2.0"}

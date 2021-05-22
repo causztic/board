@@ -1,3 +1,13 @@
 <section class="row">
   <h1>Create a Product</h1>
+  <%= form_for @changeset, Routes.product_path(@conn, :create), fn f -> %>
+    <div class="form-group">
+      <%= label f, :title, class: "control-label" %>
+      <%= text_input f, :title, class: "form-control" %>
+      <%= error_tag f, :title %>
+    </div>
+    <div class="form-group">
+      <%= submit "Submit", class: "btn btn-primary" %>
+    </div>
+  <% end %>
 </section>
