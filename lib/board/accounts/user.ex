@@ -1,10 +1,11 @@
-defmodule Board.UserManager.User do
+defmodule Board.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
   schema "users" do
     field :email, :string
     field :password, :string
+    many_to_many :products, Board.Products.Product, join_through: "users_products"
 
     timestamps()
   end

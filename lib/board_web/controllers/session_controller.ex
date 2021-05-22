@@ -1,10 +1,10 @@
 defmodule BoardWeb.SessionController do
   use BoardWeb, :controller
 
-  alias Board.{UserManager, UserManager.User, UserManager.Guardian}
+  alias Board.{Accounts, Accounts.User, Accounts.Guardian}
 
   def new(conn, _) do
-    changeset = UserManager.change_user(%User{})
+    changeset = Accounts.change_user(%User{})
     maybe_user = Guardian.Plug.current_resource(conn)
     if maybe_user do
       redirect(conn, to: "/protected")
@@ -14,20 +14,20 @@ defmodule BoardWeb.SessionController do
   end
 
   def login(conn, %{"user" => %{"email" => email, "password" => password}}) do
-    UserManager.authenticate_user(email, password)
+    Accounts.authenticate_user(email, password)
     |> login_reply(conn)
   end
 
   def logout(conn, _) do
     conn
-    |> Guardian.Plug.sign_out() #This module's full name is Board.UserManager.Guardian.Plug,
+    |> Guardian.Plug.sign_out() #This module's full name is Board.Accounts.Guardian.Plug,
     |> redirect(to: "/login")   #and the arguments specfied in the Guardian.Plug.sign_out()
   end                           #docs are not applicable here
 
   defp login_reply({:ok, user}, conn) do
     conn
     |> put_flash(:info, "Welcome back!")
-    |> Guardian.Plug.sign_in(user)   #This module's full name is Board.UserManager.Guardian.Plug,
+    |> Guardian.Plug.sign_in(user)   #This module's full name is Board.Accounts.Guardian.Plug,
     |> redirect(to: "/protected")    #and the arguments specified in the Guardian.Plug.sign_in()
   end                                #docs are not applicable here.
 

@@ -14,9 +14,9 @@ config :board,
 config :board, BoardWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "SNQgQwUDp3sRgY4KrUTkCv0YSn7DMyo/QwAdoQmGoGsV+zTZK0+BtDfAHc3JmRiU",
-  render_errors: [view: BoardWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Board.PubSub, adapter: Phoenix.PubSub.PG2],
-  live_view: [signing_salt: "QcyA2aC+"]
+  live_view: [signing_salt: "QcyA2aC+"],
+  pubsub_server: Board.PubSub,
+  render_errors: [view: BoardWeb.ErrorView, accepts: ~w(html json)]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -26,7 +26,7 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :board, Board.UserManager.Guardian,
+config :board, Board.Accounts.Guardian,
   issuer: "board",
   secret_key: ""
 
