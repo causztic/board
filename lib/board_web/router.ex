@@ -39,7 +39,7 @@ defmodule BoardWeb.Router do
   scope "/", BoardWeb do
     pipe_through [:browser, :auth, :ensure_auth]
 
-    get "/protected", PageController, :protected
+    get "/products", ProductController, :index
     get "/products/new", ProductController,:new
     post "/products", ProductController, :create
   end

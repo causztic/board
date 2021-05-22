@@ -1,0 +1,12 @@
+<section class="row">
+  <h1>Your Products</h1>
+</section>
+<section>
+  <div>
+    <%= for product <- @products do %>
+      <h2>
+        <%= product.title %>
+      </h2>
+    <% end %>
+  </div>
+</section>

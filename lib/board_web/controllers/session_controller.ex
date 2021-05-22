@@ -7,7 +7,7 @@ defmodule BoardWeb.SessionController do
     changeset = Accounts.change_user(%User{})
     maybe_user = Guardian.Plug.current_resource(conn)
     if maybe_user do
-      redirect(conn, to: "/protected")
+      redirect(conn, to: "/products")
     else
       render(conn, "new.html", changeset: changeset, action: Routes.session_path(conn, :login))
     end
@@ -28,7 +28,7 @@ defmodule BoardWeb.SessionController do
     conn
     |> put_flash(:info, "Welcome back!")
     |> Guardian.Plug.sign_in(user)   #This module's full name is Board.Accounts.Guardian.Plug,
-    |> redirect(to: "/protected")    #and the arguments specified in the Guardian.Plug.sign_in()
+    |> redirect(to: "/products")    #and the arguments specified in the Guardian.Plug.sign_in()
   end                                #docs are not applicable here.
 
   defp login_reply({:error, reason}, conn) do

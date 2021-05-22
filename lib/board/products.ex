@@ -22,6 +22,15 @@ defmodule Board.Products do
     Repo.all(Product)
   end
 
+  def list_products(%User{id: user_id}) do
+    # TODO: wonder whether this is better or preload with user
+    query = from(p in Product,
+                 join: u in assoc(p, :users),
+                 where: u.id == ^user_id)
+
+    Repo.all(query)
+  end
+
   @doc """
   Gets a single product.
 
