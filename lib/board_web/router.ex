@@ -1,6 +1,5 @@
 defmodule BoardWeb.Router do
   use BoardWeb, :router
-  alias Board.Accounts
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -41,6 +40,7 @@ defmodule BoardWeb.Router do
     pipe_through [:browser, :auth, :ensure_auth]
 
     get "/protected", PageController, :protected
+    get "/products/new", ProductController,:new
   end
 
   defp set_current_user(conn, _) do
