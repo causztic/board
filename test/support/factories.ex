@@ -21,6 +21,16 @@ defmodule Board.Factories do
       |> struct(attrs)
   end
 
+  def build(:backlog_item, attributes) do
+    attrs = Enum.into(attributes, %{
+      title: "#{System.unique_integer()}",
+      description: ""
+    })
+
+    %Board.Products.BacklogItem{}
+      |> struct(attrs)
+  end
+
   def insert!(factory_name, attributes \\ []) do
     factory_name |> build(attributes) |> Repo.insert!()
   end
