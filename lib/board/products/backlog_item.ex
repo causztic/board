@@ -6,7 +6,7 @@ defmodule Board.Products.BacklogItem do
     field :description, :string
     field :estimate, :integer
     field :title, :string
-    belongs_to :product, Product
+    belongs_to :product, Board.Products.Product
 
     timestamps()
   end
