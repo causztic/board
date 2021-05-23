@@ -6,7 +6,7 @@ defmodule Board.Repo.Migrations.CreateBacklogItems do
       add :title, :string
       add :description, :string
       add :estimate, :integer
-      add :product_id, references(:product, on_delete: :nothing)
+      add :product_id, references(:products, on_delete: :nothing)
 
       timestamps()
     end

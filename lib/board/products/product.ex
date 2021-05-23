@@ -4,6 +4,7 @@ defmodule Board.Products.Product do
 
   schema "products" do
     field :title, :string
+    has_many :backlog_items, Board.Products.BacklogItem
     many_to_many :users, Board.Accounts.User, join_through: "users_products"
 
     timestamps()
