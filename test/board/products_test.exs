@@ -81,6 +81,15 @@ defmodule Board.ProductsTest do
       assert Products.list_backlog_items() == [backlog_item]
     end
 
+    test "list_backlog_items/1 returns all backlog_items by product" do
+      product = insert!(:product)
+      insert!(:backlog_item)
+
+      backlog_item = insert!(:backlog_item, product_id: product.id)
+
+      assert Products.list_backlog_items(product.id) == [backlog_item]
+    end
+
     test "get_backlog_item!/1 returns the backlog_item with given id" do
       backlog_item = insert!(:backlog_item)
       assert Products.get_backlog_item!(backlog_item.id) == backlog_item

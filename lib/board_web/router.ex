@@ -39,9 +39,9 @@ defmodule BoardWeb.Router do
   scope "/", BoardWeb do
     pipe_through [:browser, :auth, :ensure_auth]
 
-    get "/products", ProductController, :index
-    get "/products/new", ProductController,:new
-    post "/products", ProductController, :create
+    resources "/products", ProductController do
+      resources "/backlog_items", BacklogItemController
+    end
   end
 
   defp set_current_user(conn, _) do
