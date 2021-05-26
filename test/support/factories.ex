@@ -24,7 +24,8 @@ defmodule Board.Factories do
   def build(:backlog_item, attributes) do
     attrs = Enum.into(attributes, %{
       title: "#{System.unique_integer()}",
-      description: ""
+      description: "",
+      order: 0
     })
 
     %Board.Products.BacklogItem{}
