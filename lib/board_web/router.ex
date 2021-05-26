@@ -3,10 +3,10 @@ defmodule BoardWeb.Router do
 
   pipeline :browser do
     plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_flash
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
+    # plug :fetch_session
+    # plug :fetch_flash
+    # plug :protect_from_forgery
+    # plug :put_secure_browser_headers
   end
 
   pipeline :api do
@@ -23,23 +23,23 @@ defmodule BoardWeb.Router do
     plug Guardian.Plug.EnsureAuthenticated
   end
 
-  scope "/", BoardWeb do
-    pipe_through [:browser, :auth]
-
-    get "/", PageController, :index
-  end
-
   scope "/api/v1/", BoardWeb do
     post "/login", SessionController, :login
   end
 
   # Definitely logged in scope
   scope "/api/v1", BoardWeb do
-    pipe_through [:browser, :auth, :ensure_auth]
+    pipe_through [:api, :auth, :ensure_auth]
     get "/logout", SessionController, :logout
 
     resources "/products", ProductController do
       resources "/backlog_items", BacklogItemController
     end
+  end
+
+  scope "/", BoardWeb do
+    pipe_through [:browser, :auth]
+
+    get "/*path", PageController, :index
   end
 end

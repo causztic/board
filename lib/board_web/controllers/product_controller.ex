@@ -4,10 +4,12 @@ defmodule BoardWeb.ProductController do
   alias Board.{Products, Products.Product}
 
   def index(conn, _params) do
-    products = conn.assigns.current_user
-      |> Products.list_products
+    products =
+      conn
+      |> Guardian.Plug.current_resource()
+      |> Products.list_products()
 
-    render(conn, "index.html", products: products)
+    json(conn, %{ products: products })
   end
 
   def new(conn, _params) do
@@ -17,14 +19,15 @@ defmodule BoardWeb.ProductController do
 
   def create(conn, %{"product" => product_params}) do
     conn.assigns.current_user
-      |> Products.create_product(product_params)
-      |> case do
-        {:ok, product} ->
-          conn
-            |> put_flash(:info, "Product #{product.title} created successfully")
-            |> redirect(to: Routes.page_path(conn, :index))
-        {:error, %Ecto.Changeset{} = changeset} ->
-          render(conn, "new.html", changeset: changeset)
-      end
+    |> Products.create_product(product_params)
+    |> case do
+      {:ok, product} ->
+        conn
+        |> put_flash(:info, "Product #{product.title} created successfully")
+        |> redirect(to: Routes.page_path(conn, :index))
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "new.html", changeset: changeset)
+    end
   end
 end

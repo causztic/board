@@ -2,16 +2,16 @@ import ky from 'ky';
 import React, { useState } from 'react';
 
 declare type AuthContext = {
-  token?: string,
+  token: string | null,
   api: typeof ky,
-  login: (email: string, password: string) => void,
+  login: (email: string, password: string) => Promise<boolean>,
   logout: () => void,
 }
 
 const auth: AuthContext = {
-  token: undefined,
+  token: null,
   api: ky,
-  login: (email: string, password: string) => {},
+  login: (email: string, password: string) => Promise.resolve(true),
   logout: () => {}
 }
 
@@ -33,14 +33,19 @@ export const AuthProvider = ({ children }: any) => {
     if (response.ok) {
       const { token } = await response.json();
       setToken(token);
+      localStorage.setItem('board-token', token);
+      return true;
     }
+
+    return false;
   }
 
   const logout = async () => {
     await api.get('/api/v1/logout');
   }
 
-  const [token, setToken] = useState<string>();
+  // TODO: handle when cookies are disabled
+  const [token, setToken] = useState<string | null>(localStorage.getItem('board-token'));
 
   const context = {
     token,

@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
-import { Route, RouteProps, Switch } from "react-router-dom";
+import { Redirect, Route, RouteProps, Switch } from "react-router-dom";
 import { Auth } from "./context/Auth";
 import LoginPage from "./pages/auth/LoginPage";
+import ProductsPage from "./pages/products/ProductsPage";
 
 export const routes = [
   {
     subRoutes: [
-      {path: '/login', exact: true, component: LoginPage}
+      {path: '/', exact: true, component: LoginPage}
     ],
   },
 ];
@@ -14,7 +15,7 @@ export const routes = [
 export const privateRoutes = [
   {
     subRoutes: [
-      {path: '/products', exact: true, component: LoginPage}
+      {path: '/products', exact: true, component: ProductsPage}
     ],
   },
 ]
@@ -22,7 +23,7 @@ export const privateRoutes = [
 const PrivateRoute = ({children, location, ...rest}: RouteProps) => {
   const auth = useContext(Auth);
 
-  return <Route {...rest} render={() => (auth.token ? children : <></>)} />;
+  return <Route {...rest} render={() => (auth.token ? children : <Redirect to="/" />)} />;
 };
 
 export const BaseRouter: React.FunctionComponent = () => {
