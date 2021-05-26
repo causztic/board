@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Redirect, Route, RouteProps, Switch } from "react-router-dom";
 import { Auth } from "./context/Auth";
 import LoginPage from "./pages/auth/LoginPage";
+import ProductBacklog from "./pages/products/ProductBacklog";
 import ProductsPage from "./pages/products/ProductsPage";
 
 export const routes = [
@@ -15,7 +16,8 @@ export const routes = [
 export const privateRoutes = [
   {
     subRoutes: [
-      {path: '/products', exact: true, component: ProductsPage}
+      {path: '/products', exact: true, component: ProductsPage},
+      {path: '/products/:id', exact: true, component: ProductBacklog }
     ],
   },
 ]

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import { Auth } from '../../context/Auth';
 import { Product } from './types';
 
@@ -19,7 +19,7 @@ const component: React.FC<RouteComponentProps> = () => {
 
   return (<section>
     <h1>Your Products</h1>
-    <div>{products.map((product) => <div key={product.id}>{product.title}</div>)}</div>
+    <div>{products.map((product) => <Link key={product.id} to={`products/${product.id}`}>{product.title}</Link>)}</div>
     <button onClick={createProduct} />
   </section>
   )
