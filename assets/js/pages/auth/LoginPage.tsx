@@ -12,7 +12,7 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
   }
 
   return (
-    <section className="phx-hero">
+    <section>
       <label>Email</label>
       <input></input>
       <label>Password</label>
