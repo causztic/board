@@ -12,22 +12,27 @@ defmodule BoardWeb.ProductController do
     json(conn, %{ products: products })
   end
 
+  @spec new(Plug.Conn.t(), any) :: Plug.Conn.t()
   def new(conn, _params) do
     changeset = Product.changeset(%Product{}, %{})
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"product" => product_params}) do
-    conn.assigns.current_user
-    |> Products.create_product(product_params)
+  # TODO: strong params-ish
+  def create(conn, params) do
+    conn
+    |> Guardian.Plug.current_resource()
+    |> Products.create_product(params)
     |> case do
       {:ok, product} ->
         conn
-        |> put_flash(:info, "Product #{product.title} created successfully")
-        |> redirect(to: Routes.page_path(conn, :index))
+        |> put_status(:created)
+        |> json(%{ message: "Product #{product.title} created successfully" })
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        conn
+        |> put_status(:unprocessable_entity)
+        |> json(%{ changeset: changeset })
     end
   end
 end

@@ -6,6 +6,9 @@ import { Product } from './types';
 const component: React.FC<RouteComponentProps> = () => {
   const {api} = useContext(Auth);
   const [products, setProducts] = useState<Product[]>([]);
+  const createProduct = async () => {
+    await api.post('/api/v1/products', { json: { title: 'test' }});
+  }
 
   useEffect(() => {
     (async () => {
@@ -17,6 +20,7 @@ const component: React.FC<RouteComponentProps> = () => {
   return (<section>
     <h1>Your Products</h1>
     <div>{products.map((product) => <div key={product.id}>{product.title}</div>)}</div>
+    <button onClick={createProduct} />
   </section>
   )
 }
