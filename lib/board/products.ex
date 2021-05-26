@@ -136,7 +136,8 @@ defmodule Board.Products do
 
   def list_backlog_items(product_id) do
     query = from(b in BacklogItem,
-                 where: b.product_id == ^product_id)
+                 where: b.product_id == ^product_id,
+                 order_by: b.order)
 
     Repo.all(query)
   end

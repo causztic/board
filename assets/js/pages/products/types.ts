@@ -4,6 +4,7 @@ export declare type Product = {
 }
 
 export declare type BacklogItem = {
+  order: number,
   title: string,
   estimate: number,
   id: string,
