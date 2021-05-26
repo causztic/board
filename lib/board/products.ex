@@ -169,8 +169,8 @@ defmodule Board.Products do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_backlog_item(id, attrs \\ %{}) do
-    %BacklogItem{product_id: id}
+  def create_backlog_item(attrs \\ %{}) do
+    %BacklogItem{}
     |> BacklogItem.changeset(attrs)
     |> Repo.insert()
   end

@@ -15,7 +15,7 @@ defmodule Board.Products.BacklogItem do
   @doc false
   def changeset(backlog_item, attrs) do
     backlog_item
-    |> cast(attrs, [:title, :description, :estimate])
+    |> cast(attrs, [:title, :description, :estimate, :product_id])
     |> validate_required([:title])
   end
 end
