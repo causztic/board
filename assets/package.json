@@ -9,6 +9,7 @@
     "ky": "^0.28.2",
     "phoenix": "file:../deps/phoenix",
     "react": "^17.0.2",
+    "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0"
   },

@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { RouteComponentProps, useParams } from 'react-router-dom';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { Auth } from '../../context/Auth';
 import { BacklogItem } from './types';
 import {Channel, Socket} from "phoenix";
@@ -45,7 +46,19 @@ const component: React.FC<RouteComponentProps> = () => {
 
   return (<section>
     <h1>Product Backlog</h1>
-    <div>{backlogItems.map((item) => <BacklogCard key={item.id} item={item} />)}</div>
+    <DragDropContext>
+      <Droppable droppableId="droppable">
+        {(provided, snapshot) => (
+            <div
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {backlogItems.map((item, index) => <BacklogCard key={item.id} item={item} index={index} />)}
+              {provided.placeholder}
+            </div>
+          )}
+      </Droppable>
+    </DragDropContext>
   </section>
   )
 }
