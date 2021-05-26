@@ -4,15 +4,7 @@ defmodule BoardWeb.ProductEndpointsTest do
   use BoardWeb.ConnCase
   # TODO: shared examples for authentication
 
-  describe "unauthenticated" do
-    test "returns 401 if not logged in", %{conn: conn} do
-      conn = get(conn, "/products/new")
-      assert conn.status == 401
-    end
-  end
-
   describe "authenticated" do
-
     setup %{conn: conn} do
       user = insert!(:user)
       {:ok, jwt, _claims} = Board.Accounts.Guardian.encode_and_sign(user)
@@ -23,16 +15,13 @@ defmodule BoardWeb.ProductEndpointsTest do
       {:ok, conn: conn}
     end
 
-    test "GET /new returns 200", %{conn: conn} do
-      conn = get(conn, "/products/new")
-      assert conn.status == 200
-    end
 
-    test "POST /create redirects to root page", %{conn: conn} do
+    test "POST /create returns correct status code and creates product", %{conn: conn} do
       product = build(:product)
-      conn = post(conn, "/products", %{ "product" => Map.from_struct(product) })
+      conn = post(conn, "/api/v1/products", Map.from_struct(product))
 
-      %{products: products} = conn.assigns.current_user
+      %{products: products} = conn
+        |> Guardian.Plug.current_resource
         |> Board.Repo.preload(:products)
 
       assert length(products) == 1
@@ -40,7 +29,7 @@ defmodule BoardWeb.ProductEndpointsTest do
       created_product = List.first(products)
 
       assert created_product.title == product.title
-      assert conn.status == 302
+      assert conn.status == 201
     end
   end
 end
