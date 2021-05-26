@@ -3,10 +3,10 @@ defmodule BoardWeb.Router do
 
   pipeline :browser do
     plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_flash
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
+    # plug :fetch_session
+    # plug :fetch_flash
+    # plug :protect_from_forgery
+    # plug :put_secure_browser_headers
   end
 
   pipeline :api do
@@ -21,35 +21,25 @@ defmodule BoardWeb.Router do
   # We use ensure_auth to fail if there is no one logged in
   pipeline :ensure_auth do
     plug Guardian.Plug.EnsureAuthenticated
-    plug :set_current_user
   end
 
-  # Maybe logged in routes
-  scope "/", BoardWeb do
-    pipe_through [:browser, :auth]
-
-    get "/", PageController, :index
-
-    get "/login", SessionController, :new
+  scope "/api/v1/", BoardWeb do
     post "/login", SessionController, :login
-    get "/logout", SessionController, :logout
   end
 
   # Definitely logged in scope
-  scope "/", BoardWeb do
-    pipe_through [:browser, :auth, :ensure_auth]
+  scope "/api/v1", BoardWeb do
+    pipe_through [:api, :auth, :ensure_auth]
+    get "/logout", SessionController, :logout
 
     resources "/products", ProductController do
       resources "/backlog_items", BacklogItemController
     end
   end
 
-  defp set_current_user(conn, _) do
-    token = Guardian.Plug.current_token(conn)
-    user = Guardian.Plug.current_resource(conn)
+  scope "/", BoardWeb do
+    pipe_through [:browser, :auth]
 
-    conn
-    |> assign(:user_token, token)
-    |> assign(:current_user, user)
+    get "/*path", PageController, :index
   end
 end
