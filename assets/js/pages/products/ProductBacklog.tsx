@@ -1,10 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { RouteComponentProps, useParams } from 'react-router-dom';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { Auth } from '../../context/Auth';
 import { BacklogItem } from './types';
 import {Channel, Socket} from "phoenix";
 import BacklogCard from './backlog/BacklogCard';
+
+function reorder<T>(list: Array<T>, startIndex: number, endIndex: number): Array<T> {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
 
 const component: React.FC<RouteComponentProps> = () => {
   const [socket, setSocket] = useState<Socket>();
@@ -44,9 +52,23 @@ const component: React.FC<RouteComponentProps> = () => {
     }
   }, [channel])
 
+  const onDragEnd = useCallback((result, provided) => {
+    if (!result.destination) {
+      return;
+    }
+
+    const items = reorder(
+      backlogItems,
+      result.source.index,
+      result.destination.index
+    );
+
+    setBackLogItems(items);
+  }, [backlogItems]);
+
   return (<section>
     <h1>Product Backlog</h1>
-    <DragDropContext>
+    <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="droppable">
         {(provided, snapshot) => (
             <div
