@@ -13,7 +13,7 @@ defmodule BoardWeb.SessionController do
     end
   end
 
-  def login(conn, %{"user" => %{"email" => email, "password" => password}}) do
+  def login(conn, %{"email" => email, "password" => password}) do
     Accounts.authenticate_user(email, password)
     |> login_reply(conn)
   end
@@ -33,7 +33,7 @@ defmodule BoardWeb.SessionController do
 
   defp login_reply({:error, reason}, conn) do
     conn
-    |> put_flash(:error, to_string(reason))
-    |> new(%{})
+    |> put_status(:unauthorized)
+    |> json(%{reason: to_string(reason)})
   end
 end

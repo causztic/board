@@ -8,8 +8,8 @@ const Root: React.FC = () => (
   <>
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/login" component={LoginPage} />
+        {/* <Route exact path="/" component={HomePage} /> */}
+        <Route exact path="/" component={LoginPage} />
       </Switch>
     </BrowserRouter>
   </>
