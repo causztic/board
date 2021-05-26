@@ -29,11 +29,17 @@ const component: React.FC<RouteComponentProps> = () => {
       socket.connect();
       setChannel(socket.channel(`board:products:${productId}`, {}));
     }
+
+    return () => {
+      socket?.disconnect();
+    }
   }, [socket])
 
   useEffect(() => {
-    if (channel !== undefined) {
-      channel.join();
+    channel?.join();
+
+    return () => {
+      channel?.leave();
     }
   }, [channel])
 
