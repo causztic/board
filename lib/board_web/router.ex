@@ -24,19 +24,19 @@ defmodule BoardWeb.Router do
     plug :set_current_user
   end
 
-  # Maybe logged in routes
   scope "/", BoardWeb do
     pipe_through [:browser, :auth]
 
     get "/", PageController, :index
+  end
 
-    get "/login", SessionController, :new
+  scope "/api/v1/", BoardWeb do
     post "/login", SessionController, :login
     get "/logout", SessionController, :logout
   end
 
   # Definitely logged in scope
-  scope "/", BoardWeb do
+  scope "/api/v1", BoardWeb do
     pipe_through [:browser, :auth, :ensure_auth]
 
     resources "/products", ProductController do
