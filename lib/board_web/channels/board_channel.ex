@@ -1,11 +1,13 @@
 defmodule BoardWeb.BoardChannel do
   use Phoenix.Channel
 
-  def join("board:test", _message, socket) do
+  # TODO: validate product id
+  def join("board:products:" <> _product_id, _message, socket) do
     {:ok, socket}
   end
 
-  def join("room:" <> _private_room_id, _params, _socket) do
-    {:error, %{reason: "unauthorized"}}
+  def handle_in("ping", %{"body" => body}, socket) do
+    broadcast!(socket, "ping!", %{body: body})
+    {:noreply, socket}
   end
 end

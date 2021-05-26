@@ -2,6 +2,7 @@ defmodule Board.Products.BacklogItem do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: [:title, :estimate, :id, :description]}
   schema "backlog_items" do
     field :description, :string
     field :estimate, :integer
