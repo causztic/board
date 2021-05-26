@@ -3,6 +3,7 @@ import { RouteComponentProps, useParams } from 'react-router-dom';
 import { Auth } from '../../context/Auth';
 import { BacklogItem } from './types';
 import {Channel, Socket} from "phoenix";
+import BacklogCard from './backlog/BacklogCard';
 
 const component: React.FC<RouteComponentProps> = () => {
   const [socket, setSocket] = useState<Socket>();
@@ -38,7 +39,7 @@ const component: React.FC<RouteComponentProps> = () => {
 
   return (<section>
     <h1>Product Backlog</h1>
-    <div>{backlogItems.map((item) => <div key={item.id} onClick={() => broadcastPing(item.id)}>{item.title}</div>)}</div>
+    <div>{backlogItems.map((item) => <BacklogCard key={item.id} item={item} />)}</div>
   </section>
   )
 }
