@@ -134,6 +134,13 @@ defmodule Board.Products do
     Repo.all(BacklogItem)
   end
 
+  def list_backlog_items(product_id) do
+    query = from(b in BacklogItem,
+                 where: b.product_id == ^product_id)
+
+    Repo.all(query)
+  end
+
   @doc """
   Gets a single backlog_item.
 
