@@ -1,18 +1,7 @@
 defmodule BoardWeb.SessionController do
   use BoardWeb, :controller
 
-  alias Board.{Accounts, Accounts.User, Accounts.Guardian}
-
-  def new(conn, _) do
-    changeset = Accounts.change_user(%User{})
-    maybe_user = Guardian.Plug.current_resource(conn)
-
-    if maybe_user do
-      redirect(conn, to: "/products")
-    else
-      render(conn, "new.html", changeset: changeset, action: Routes.session_path(conn, :login))
-    end
-  end
+  alias Board.{Accounts, Accounts.Guardian}
 
   def login(conn, %{"email" => email, "password" => password}) do
     Accounts.authenticate_user(email, password)

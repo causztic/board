@@ -12,12 +12,6 @@ defmodule BoardWeb.ProductController do
     json(conn, %{ products: products })
   end
 
-  @spec new(Plug.Conn.t(), any) :: Plug.Conn.t()
-  def new(conn, _params) do
-    changeset = Product.changeset(%Product{}, %{})
-    render(conn, "new.html", changeset: changeset)
-  end
-
   # TODO: strong params-ish
   def create(conn, params) do
     conn
