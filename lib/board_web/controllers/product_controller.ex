@@ -1,7 +1,7 @@
 defmodule BoardWeb.ProductController do
   use BoardWeb, :controller
 
-  alias Board.{Products, Products.Product}
+  alias Board.Products
 
   def index(conn, _params) do
     products =
