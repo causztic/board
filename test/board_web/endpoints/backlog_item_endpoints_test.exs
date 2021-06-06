@@ -35,6 +35,7 @@ defmodule BoardWeb.BacklogItemEndpointsTest do
       backlog_item = insert!(:backlog_item, %{product_id: product.id})
       conn = delete(conn, "/api/v1/products/#{product.id}/backlog_items/#{backlog_item.id}")
 
+      assert length(Products.list_backlog_items) == 0
       assert conn.status == 200
     end
   end
