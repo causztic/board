@@ -45,7 +45,8 @@ defmodule Board.MixProject do
       {:plug_cowboy, "~> 2.1"},
       {:guardian, "~> 2.0"},
       {:guardian_phoenix, "~> 2.0"},
-      {:argon2_elixir, "~> 2.0"}
+      {:argon2_elixir, "~> 2.0"},
+      {:bodyguard, "~> 2.4"},
     ]
   end
 
