@@ -5,6 +5,7 @@ import { Auth } from '../../context/Auth';
 import { BacklogItem } from './types';
 import {Channel, Socket} from "phoenix";
 import BacklogCard from './backlog/BacklogCard';
+import CreateBacklog from './backlog/CreateBacklog';
 
 function reorder<T>(list: Array<T>, startIndex: number, endIndex: number): Array<T> {
   const result = Array.from(list);
@@ -20,17 +21,18 @@ const component: React.FC<RouteComponentProps> = () => {
   const {api, token} = useContext(Auth);
   const { id: productId } = useParams<{ id: string }>();
   const [backlogItems, setBackLogItems] = useState<BacklogItem[]>([]);
-  const broadcastPing = (id: string) => {
-    channel.push('ping', { body: id });
-  }
+  // const broadcastPing = (id: string) => {
+  //   channel.push('ping', { body: id });
+  // }
+
+  const getBacklogItems = async () => {
+    const results: { backlog_items: BacklogItem[] } = await api.get(`/api/v1/products/${productId}/backlog_items`).json();
+    setBackLogItems(results.backlog_items);
+  };
 
   useEffect(() => {
     setSocket(new Socket("/socket", {params: { token }}));
-
-    (async () => {
-      const results: { backlog_items: BacklogItem[] } = await api.get(`/api/v1/products/${productId}/backlog_items`).json();
-      setBackLogItems(results.backlog_items);
-    })();
+    getBacklogItems();
   }, []);
 
   useEffect(() => {
@@ -68,9 +70,11 @@ const component: React.FC<RouteComponentProps> = () => {
 
   return (<section>
     <h1>Product Backlog</h1>
+    {/* TODO: use sockets to update */}
+    <CreateBacklog productId={productId} onSubmitted={getBacklogItems} />
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="droppable">
-        {(provided, snapshot) => (
+        {(provided) => (
             <div
               {...provided.droppableProps}
               ref={provided.innerRef}
