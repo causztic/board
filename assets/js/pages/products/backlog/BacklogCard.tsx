@@ -3,7 +3,7 @@ import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { BacklogItem } from "../types";
 
-const component: React.FC<{ item: BacklogItem, index: number, handleDelete: (id: string) => {} }> = ({ item, index, handleDelete }) => {
+const component: React.FC<{ item: BacklogItem, index: number, handleDelete: (id: string) => void }> = ({ item, index, handleDelete }) => {
   return (<Draggable draggableId={`${item.id}`} index={index}>
     {(provided) => (
       <div

@@ -158,6 +158,8 @@ defmodule Board.Products do
     Repo.all(query)
   end
 
+  def get_backlog_item(id), do: Repo.get(BacklogItem, id)
+
   @doc """
   Gets a single backlog_item.
 
