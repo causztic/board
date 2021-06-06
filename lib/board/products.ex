@@ -3,11 +3,27 @@ defmodule Board.Products do
   The Products context.
   """
 
+  @behaviour Bodyguard.Policy
+
   import Ecto.Query, warn: false
   alias Board.Repo
 
   alias Board.Accounts.User
   alias Board.Products.Product
+
+  def authorize(:delete_backlog_item, %User{id: user_id}, %Product{id: product_id}) do
+    Repo.one(
+      from(p in Product,
+          join: u in assoc(p, :users),
+          where: u.id == ^user_id and p.id == ^product_id)
+    )
+    |> case do
+      nil -> :false
+      _ -> :ok
+    end
+  end
+
+  def authorize(_, _, _), do: false
 
   @doc """
   Returns the list of products.
@@ -141,6 +157,8 @@ defmodule Board.Products do
 
     Repo.all(query)
   end
+
+  def get_backlog_item(id), do: Repo.get(BacklogItem, id)
 
   @doc """
   Gets a single backlog_item.

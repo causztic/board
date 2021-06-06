@@ -30,6 +30,13 @@ const component: React.FC<RouteComponentProps> = () => {
     setBackLogItems(results.backlog_items);
   };
 
+  const deleteBacklogItem = (id: string) => {
+    api.delete(`/api/v1/products/${productId}/backlog_items/${id}`).then(() => {
+      // TODO: refactor
+      setBackLogItems(backlogItems.filter((backlogItem) => backlogItem.id !== id));
+    })
+  }
+
   useEffect(() => {
     setSocket(new Socket("/socket", {params: { token }}));
     getBacklogItems();
@@ -79,7 +86,7 @@ const component: React.FC<RouteComponentProps> = () => {
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {backlogItems.map((item, index) => <BacklogCard key={item.id} item={item} index={index} />)}
+              {backlogItems.map((item, index) => <BacklogCard key={item.id} item={item} index={index} handleDelete={deleteBacklogItem} />)}
               {provided.placeholder}
             </div>
           )}
