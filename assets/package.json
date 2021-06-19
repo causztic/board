@@ -3,7 +3,8 @@
   "license": "MIT",
   "scripts": {
     "deploy": "webpack --mode production",
-    "watch": "webpack --mode development --watch"
+    "watch": "webpack --mode development --watch",
+    "preinstall": "npx npm-force-resolutions"
   },
   "dependencies": {
     "antd": "^4.16.1",
@@ -25,18 +26,21 @@
     "@types/react-router-dom": "^5.1.7",
     "autoprefixer": "^10.2.5",
     "babel-loader": "^8.0.0",
-    "copy-webpack-plugin": "^5.1.1",
+    "copy-webpack-plugin": "^9.0.0",
     "css-loader": "^5.2.6",
-    "mini-css-extract-plugin": "^0.9.0",
-    "optimize-css-assets-webpack-plugin": "^6.0.0",
+    "css-minimizer-webpack-plugin": "^3.0.1",
+    "npm-force-resolutions": "0.0.10",
     "postcss": "^8.3.0",
     "postcss-loader": "^4.3.0",
     "style-loader": "^2.0.0",
-    "tailwindcss": "^2.1.2",
+    "tailwindcss": "^2.2.2",
     "terser-webpack-plugin": "^2.3.2",
     "ts-loader": "^8.3.0",
     "typescript": "^4.2.4",
-    "webpack": "4.41.5",
+    "webpack": "^5.39.1",
     "webpack-cli": "^3.3.2"
+  },
+  "resolutions": {
+    "css-what": "5.0.1"
   }
 }
