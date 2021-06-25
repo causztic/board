@@ -1,12 +1,10 @@
-import Board.Factories
-
 defmodule BoardWeb.ProductEndpointsTest do
   use BoardWeb.ConnCase
   # TODO: shared examples for authentication
 
   describe "authenticated" do
     setup %{conn: conn} do
-      user = insert!(:user)
+      user = insert(:user)
       {:ok, jwt, _claims} = Board.Accounts.Guardian.encode_and_sign(user)
       conn =
         conn

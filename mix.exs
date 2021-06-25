@@ -47,6 +47,7 @@ defmodule Board.MixProject do
       {:guardian_phoenix, "~> 2.0"},
       {:argon2_elixir, "~> 2.0"},
       {:bodyguard, "~> 2.4"},
+      {:ex_machina, "~> 2.7.0"},
     ]
   end
 

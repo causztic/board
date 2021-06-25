@@ -24,6 +24,7 @@ defmodule Board.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import Board.DataCase
+      import Board.Factories
     end
   end
 

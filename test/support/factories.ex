@@ -1,38 +1,24 @@
 defmodule Board.Factories do
-  alias Board.Repo
-  def build(_any, attributes \\ [])
+  use ExMachina.Ecto, repo: Board.Repo
 
-  def build(:user, attributes) do
-    attrs = Enum.into(attributes, %{
-      email: "hello#{System.unique_integer()}",
-      password: "password"
-    })
-
-    %Board.Accounts.User{}
-      |> struct(attrs)
+  def user_factory do
+    %Board.Accounts.User{
+      email: sequence(:email, &"email-#{&1}@example.com"),
+      password: "password",
+    }
   end
 
-  def build(:product, attributes) do
-    attrs = Enum.into(attributes, %{
+  def product_factory do
+    %Board.Products.Product{
       title: "#{System.unique_integer()}"
-    })
-
-    %Board.Products.Product{}
-      |> struct(attrs)
+    }
   end
 
-  def build(:backlog_item, attributes) do
-    attrs = Enum.into(attributes, %{
+  def backlog_item_factory do
+    %Board.Products.BacklogItem{
       title: "#{System.unique_integer()}",
       description: "",
       order: 0
-    })
-
-    %Board.Products.BacklogItem{}
-      |> struct(attrs)
-  end
-
-  def insert!(factory_name, attributes \\ []) do
-    factory_name |> build(attributes) |> Repo.insert!()
+    }
   end
 end
