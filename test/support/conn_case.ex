@@ -16,11 +16,12 @@ defmodule BoardWeb.ConnCase do
   """
 
   use ExUnit.CaseTemplate
-
+  
   using do
     quote do
       import Plug.Conn
       import Phoenix.ConnTest
+      import Board.Factories
 
       alias BoardWeb.Router.Helpers, as: Routes
 
