@@ -34,3 +34,4 @@ npm-debug.log
 /priv/static/
 *.secret.exs
 !test.secret.exs
+!dev.secret.exs
