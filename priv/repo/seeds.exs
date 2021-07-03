@@ -13,13 +13,21 @@
 alias Board.Repo
 alias Board.{Accounts.User, Products.Product}
 
-# Creating a test user
-user = %User{}
-  |> User.changeset(%{ email: "test@test.com", password: "secret" })
-  |> Repo.insert!
+# Consider Multi for more complex seeds in the future
+# https://curiosum.com/blog/elixir-ecto-database-transactions
 
-# Creating a test product
-%Product{}
-|> Product.changeset(%{ title: "test product" })
-|> Ecto.Changeset.put_assoc(:users, [user])
-|> Repo.insert!
+Repo.transaction(fn ->
+  # Creating a test user
+  user = %User{}
+    |> User.changeset(%{ email: "test@test.com", password: "secret" })
+    |> Repo.insert!
+
+  # Creating a test product
+  product = %Product{}
+    |> Product.changeset(%{ title: "test product" })
+    |> Ecto.Changeset.put_assoc(:users, [user])
+    |> Repo.insert!
+  
+  {user, product}
+end)
+
