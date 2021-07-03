@@ -1,7 +1,7 @@
 defmodule BoardWeb.BacklogItemController do
   use BoardWeb, :controller
 
-  alias Board.{Products, Products.Product, BacklogItems, BacklogItems.BacklogItem}
+  alias Board.{Products.Product, BacklogItems, BacklogItems.BacklogItem}
 
   def index(conn, %{"product_id" => product_id}) do
     # TODO: restrict index to only products belonging to the user
@@ -29,9 +29,9 @@ defmodule BoardWeb.BacklogItemController do
   def delete(conn, %{"product_id" => product_id, "id" => id}) do
     user = Guardian.Plug.current_resource(conn)
     # backlog_item = %BacklogItem{id: String.to_integer(id)}
-    with %BacklogItem{} = backlog_item <- Products.get_backlog_item(id),
-      :ok <- Bodyguard.permit(Products, :delete_backlog_item, user, %Product{id: product_id}),
-        {:ok, _ } <- Products.delete_backlog_item(backlog_item) do
+    with %BacklogItem{} = backlog_item <- BacklogItems.get_backlog_item(id),
+      :ok <- Bodyguard.permit(BacklogItems, :delete_backlog_item, user, %Product{id: product_id}),
+        {:ok, _ } <- BacklogItems.delete_backlog_item(backlog_item) do
           conn
           |> put_status(:ok)
           |> json(nil)
