@@ -1,7 +1,7 @@
 defmodule BoardWeb.BacklogItemController do
   use BoardWeb, :controller
 
-  alias Board.{Products, Products.Product, Products.BacklogItem}
+  alias Board.{Products, Products.Product, BacklogItems.BacklogItem}
 
   def index(conn, %{"product_id" => product_id}) do
     # TODO: restrict index to only products belonging to the user

@@ -135,7 +135,7 @@ defmodule Board.Products do
     Product.changeset(product, %{})
   end
 
-  alias Board.Products.BacklogItem
+  alias Board.BacklogItems.BacklogItem
 
   @doc """
   Returns the list of backlog_items.

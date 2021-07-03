@@ -1,7 +1,7 @@
 defmodule Board.ProductsTest do
   use Board.DataCase
 
-  alias Board.{Products, Products.Product, Products.BacklogItem}
+  alias Board.{Products, Products.Product, BacklogItems.BacklogItem}
 
   describe "products" do
     @valid_attrs %{title: "some title"}
