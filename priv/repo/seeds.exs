@@ -11,7 +11,7 @@
 # and so on) as they will fail if something goes wrong.
 
 alias Board.Repo
-alias Board.{Accounts.User, Products.Product}
+alias Board.{Accounts.User, Products.Product, BacklogItems.BacklogItem}
 
 # Consider Multi for more complex seeds in the future
 # https://curiosum.com/blog/elixir-ecto-database-transactions
@@ -27,7 +27,20 @@ Repo.transaction(fn ->
     |> Product.changeset(%{ title: "test product" })
     |> Ecto.Changeset.put_assoc(:users, [user])
     |> Repo.insert!
+
   
-  {user, product}
+  # Creating three backlog items
+  # TODO: refactor to use single statement
+  backlog_items = Enum.map(0..2, fn(index) ->
+      %BacklogItem{}
+      |> BacklogItem.changeset(%{ 
+          order: index, 
+          title: "backlog item #{index}", 
+          product_id: product.id
+        })
+      |> Repo.insert!
+    end)
+  
+  {user, product, backlog_items}
 end)
 

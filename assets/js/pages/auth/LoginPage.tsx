@@ -5,7 +5,7 @@ import { Auth } from '../../context/Auth';
 const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
   const { login, logout } = useContext(Auth);
   const loginWithParams = async () => {
-    const loggedIn = await login('limyaojie93@gmail.com', 'secret');
+    const loggedIn = await login('test@test.com', 'secret');
     if (loggedIn) {
       history.push('/products');
     }
