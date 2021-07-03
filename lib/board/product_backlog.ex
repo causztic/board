@@ -1,6 +1,6 @@
-defmodule Board.BacklogItems do
+defmodule Board.ProductBacklogs do
   @moduledoc """
-  The BacklogItems context.
+  The ProductBacklogs context.
   """
   
   @behaviour Bodyguard.Policy
@@ -10,7 +10,7 @@ defmodule Board.BacklogItems do
   
   alias Board.Accounts.User
   alias Board.Products.Product
-  alias Board.BacklogItems.BacklogItem
+  alias Board.ProductBacklogs.BacklogItem
   
   def authorize(:delete_backlog_item, %User{id: user_id}, %Product{id: product_id}) do
     Repo.one(

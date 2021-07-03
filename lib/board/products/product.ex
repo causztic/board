@@ -5,7 +5,7 @@ defmodule Board.Products.Product do
   @derive {Jason.Encoder, only: [:title, :id]}
   schema "products" do
     field :title, :string
-    has_many :backlog_items, Board.BacklogItems.BacklogItem
+    has_many :backlog_items, Board.ProductBacklogs.BacklogItem
     many_to_many :users, Board.Accounts.User, join_through: "users_products"
 
     timestamps()

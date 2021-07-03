@@ -1,4 +1,4 @@
-defmodule Board.Repo.Migrations.AddOrderToBacklogItems do
+defmodule Board.Repo.Migrations.AddOrderToProductBacklogs do
   use Ecto.Migration
 
   def change do

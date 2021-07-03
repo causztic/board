@@ -15,7 +15,7 @@ defmodule Board.Factories do
   end
 
   def backlog_item_factory do
-    %Board.BacklogItems.BacklogItem{
+    %Board.ProductBacklogs.BacklogItem{
       title: "#{System.unique_integer()}",
       description: "",
       order: 0

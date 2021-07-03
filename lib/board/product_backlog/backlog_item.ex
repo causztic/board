@@ -1,4 +1,4 @@
-defmodule Board.BacklogItems.BacklogItem do
+defmodule Board.ProductBacklogs.BacklogItem do
   use Ecto.Schema
   import Ecto.Changeset
 

@@ -11,7 +11,7 @@
 # and so on) as they will fail if something goes wrong.
 
 alias Board.Repo
-alias Board.{Accounts.User, Products.Product, BacklogItems.BacklogItem}
+alias Board.{Accounts.User, Products.Product, ProductBacklogs.BacklogItem}
 
 # Consider Multi for more complex seeds in the future
 # https://curiosum.com/blog/elixir-ecto-database-transactions
